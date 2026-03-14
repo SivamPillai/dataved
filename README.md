@@ -2,94 +2,65 @@
 
 [![Python Tests](https://github.com/Zolnoi/data-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/Zolnoi/data-dashboard/actions/workflows/tests.yml)
 
-A Streamlit-based dashboard for analyzing electrical current data and harmonics from MongoDB. This application provides interactive visualizations and analysis tools for electrical current measurements and their harmonic components.
+A Streamlit-based dashboard for exploring and analyzing time-series data. Upload CSV files, pick a datetime column, and use the built-in tabs for trend analysis, correlation, distributions, anomaly detection, and visual exploration. The app is generalized to work with any time-series dataset.
+
+**Data requirement:** Your CSV must have at least one column of type datetime (used for time-based resampling and trend charts). Name it in the sidebar when loading (e.g. `timestamp`).
 
 ## Features
 
-- **Data Fetching**: Retrieve data from MongoDB based on machine ID, tenant ID, and time range
-- **Current Analysis**: Visualize current trends with interactive plots
-- **Harmonics Analysis**: Analyze harmonic components of current measurements
-- **Interactive UI**: User-friendly interface with customizable parameters
-- **Data Cleaning**: Automatic handling of null values and data preprocessing
+- **CSV upload**: Load one or more CSV datasets with a chosen timestamp column; nulls are handled automatically.
+- **Raw Data**: View loaded tables in the app.
+- **Trend**: Time-series plots with resampling and optional rolling average.
+- **Correlation**: Scatter plots and correlation heatmaps between numeric columns.
+- **Distribution**: Histograms, KDE, and box plots for numeric columns.
+- **Anomaly detection**: IQR, LOESS, or Isolation Forest to flag outliers in series.
+- **Explore**: Interactive visual exploration with PyGWalker (when installed).
 
 ## Prerequisites
 
-- Python 3.x
-- MongoDB connection
-- Required Python packages (see `requirements.txt`)
+- Python 3.10+
+- [uv](https://docs.astral.sh/uv/) (install: `curl -LsSf https://astral.sh/uv/install.sh | sh`)
 
 ## Installation
 
-1. Clone the repository
-2. Create a virtual environment:
+1. Clone the repository.
+2. Create a virtual environment and install dependencies with uv:
    ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   uv sync
    ```
-3. Install dependencies:
+   This creates `.venv` (if needed), installs the Python version from `.python-version`, and installs all dependencies from `pyproject.toml` using `uv.lock`.
+3. Activate the environment (optional; `uv run` uses it automatically):
    ```bash
-   pip install -r requirements.txt
+   source .venv/bin/activate   # On Windows: .venv\Scripts\activate
    ```
-4. Set up secrets:
-   - Create a `.streamlit/secrets.toml` file with the following structure:
-     ```toml
-     [mongodb]
-     uri = "your_mongodb_uri"
-     db_name = "your_database_name"
-     ```
-   - Replace the values with your actual MongoDB credentials
-   - Note: Never commit the secrets.toml file to version control
-
 ## Usage
 
 1. Start the Streamlit app:
    ```bash
-   streamlit run data_dashboard.py
+   uv run streamlit run dashboard.py
    ```
+   Or with the venv activated: `streamlit run dashboard.py`
 
-2. Use the sidebar to configure:
-   - Dataset Name
-   - Machine ID
-   - Tenant ID
-   - Collection Name
-   - Date and Time Range
+2. In the sidebar:
+   - Enter a **Dataset name** and **upload a CSV file**.
+   - Set the **Timestamp column name** to the column that holds datetime values (e.g. `timestamp`). Your CSV must have at least one datetime column for trend and time-based views.
+   - Click **Submit** to load the data.
 
-3. Click "Fetch Data" to retrieve data from MongoDB
-
-4. Select datasets for analysis from the available options
-
-5. Choose between:
-   - Trend Analysis: View current measurements over time
-   - Harmonics Analysis: Analyze harmonic components
-
-## Data Structure
-
-The application expects MongoDB documents with the following structure:
-- `metaData`: Contains `machine_id` and `tenant_id`
-- `timestamp`: Time of measurement
-- Current measurements (`cur1`, `cur2`, `cur3`)
-- Harmonic components (`ch1`, `ch2`, `ch3`)
-
-## Features in Detail
-
-### Current Analysis
-- Displays rolling average of current measurements
-- Interactive time series plots
-- Multiple current channels visualization
-
-### Harmonics Analysis
-- Area plots showing harmonic components
-- Comparison across multiple datasets
-- Customizable visualization parameters
+3. Select the loaded dataset from the sidebar, then use the tabs:
+   - **Raw Data**: Browse the table.
+   - **Trend**: Time-series charts with resampling and rolling average.
+   - **Correlation**: Scatter or heatmap of numeric columns.
+   - **Distribution**: Histogram, KDE, or box plot for numeric columns.
+   - **Anomaly**: Run IQR, LOESS, or Isolation Forest on selected series.
+   - **Explore**: Use PyGWalker for ad-hoc visual exploration (if installed).
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+We welcome contributions from the community. If you’re looking for new features or have found a bug:
+
+- **Bug reports and feature requests:** please [open an issue](https://github.com/SivamPillai/dataved/issues).
+- **Code changes:** please open a Pull Request. Fork the repo, create a branch, make your changes, and submit a PR.
 
 ## License
 
-This project is part of the Zolnoi Codebase and is proprietary software with restricted access. All rights reserved. Unauthorized copying, modification, distribution, or use of this software is strictly prohibited.
+This project is released under the **MIT License**. It was built for internal data analysis at [Zolnoi](https://zolnoi.com) and is now open sourced for broader community use. See [LICENSE](LICENSE) for the full text. Credit to **Zolnoi** for the original development and release.

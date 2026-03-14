@@ -5,7 +5,7 @@ import pytest
 
 def test_data_dashboard_main_import():
     """Entrypoint module and main function are importable."""
-    from data_dashboard import main
+    from dashboard import main
 
     assert callable(main)
 
