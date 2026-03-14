@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      checks: write   # required for publish-unit-test-result-action to create check runs
+      checks: write          # create check runs
+      pull-requests: write   # comment on PRs with test summary
 
     steps:
     - uses: actions/checkout@v3
