@@ -1,0 +1,3 @@
+# Future: DB connection config (e.g. MongoDB, Postgres via Streamlit st.connection)
+# mongodb_fields: []
+# postgres_fields: []
