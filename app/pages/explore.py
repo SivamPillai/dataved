@@ -20,7 +20,7 @@ def render_pygwalker_explore(selected_datasets: List[str]) -> None:
     if not HAS_PYGWALKER:
         st.info(
             "Visual exploration requires **pygwalker**. "
-            "Install with: `pip install pygwalker`"
+            "Install with: `uv add pygwalker` or run `uv sync`"
         )
         return
     dataset_name = st.selectbox(
