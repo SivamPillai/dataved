@@ -6,6 +6,8 @@ A Streamlit-based dashboard for exploring and analyzing time-series data. Upload
 
 **Data requirement:** Your CSV must have at least one column of type datetime (used for time-based resampling and trend charts). Name it in the sidebar when loading (e.g. `timestamp`).
 
+**[Take it for a test drive](https://dataved.streamlit.app/)** — try the app live on the Streamlit Community Cloud. Alternatively, you can run it locally by following the installation and usage steps below.
+
 ## Features
 
 - **CSV upload**: Load one or more CSV datasets with a chosen timestamp column; nulls are handled automatically.
@@ -33,6 +35,7 @@ A Streamlit-based dashboard for exploring and analyzing time-series data. Upload
    ```bash
    source .venv/bin/activate   # On Windows: .venv\Scripts\activate
    ```
+4. To run tests, install dev dependencies: `uv sync --extra dev`, then `uv run pytest`.
 ## Usage
 
 1. Start the Streamlit app:
